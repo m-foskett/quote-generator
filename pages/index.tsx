@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Quote Generator</title>
+        <title>Inspirational Quote Generator</title>
         <meta name="description" content="Generates an inspirational quote!" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const GradientBackgroundCon = styled.div`
-  background: linear-gradient(to right, #280901, #e0431cd6);
+  background: linear-gradient(to right, #280901, #1ce033d5);
   background-size: 400% 400%;
   animation: gradient 6s ease infinite;
   height: 100vh;

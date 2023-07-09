@@ -1,8 +1,9 @@
-import { GradientBackgroundCon } from '@/components/quote_generator/QuoteGeneratorElements'
 import Head from 'next/head'
 import Image from 'next/image'
-
-
+// Components
+import { BackgroundImage1, GradientBackgroundCon } from '../components/quote_generator/QuoteGeneratorElements'
+// Assets
+import Brain from '../assets/brain.jpg'
 export default function Home() {
   return (
     <>
@@ -13,7 +14,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GradientBackgroundCon>
-
+        {/* <BackgroundImage1
+          src={Brain}
+          height="300"
+          alt="brain"
+        /> */}
       </GradientBackgroundCon>
     </>
   )

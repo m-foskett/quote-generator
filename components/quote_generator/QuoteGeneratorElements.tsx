@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const GradientBackgroundCon = styled.div`
-  background: linear-gradient(to right, #280901, #1ce033d5);
+  background: linear-gradient(to right, #ddef0ef7, #e0a21cd4);
   background-size: 400% 400%;
   animation: gradient 6s ease infinite;
   height: 100vh;
@@ -19,4 +19,11 @@ export const GradientBackgroundCon = styled.div`
       background-position: 0% 50%;
     }
   }
+`;
+
+export const BackgroundImage1 = styled(Image)`
+  position: relative;
+  z-index: 1;
+  margin-left: -120px;
+  margin-top: -10px;
 `;

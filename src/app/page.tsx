@@ -6,13 +6,18 @@ import GreenBook from '../assets/green-book.png'
 import OrangeBook from '../assets/orange-book.png'
 import { useState } from 'react'
 import Footer from '@/components/Footer';
+import QuoteModal from '@/components/QuoteModal'
 
 export default function Home() {
   // State Variables
   const [numberOfQuotes, setNumberOfQuotes] = useState<Number>(0);
 
   return (
+    // Gradient Background
     <div className='w-screen h-screen bg-gradient-to-r from-lime-900 to-lime-300 animate-gradient-x'>
+      {/* Quote Modal */}
+      <QuoteModal />
+      {/* Background Images */}
       <Image
         src={GreenBook}
         alt="green book"
@@ -27,6 +32,7 @@ export default function Home() {
         height={150}
         className='fixed z-[1] right-[98px] bottom-[67px]'
       />
+      {/* Footer */}
       <Footer numberOfQuotes={numberOfQuotes}/>
     </div>
   )

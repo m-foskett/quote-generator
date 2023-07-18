@@ -1,7 +1,7 @@
 const sharp = require("sharp");
 const apiURL = "https://zenquotes.io/api/random";
 const fetch = require("node-fetch");
-
+// Steps
 // Fetch a random quote
 
 // Turn the text of the quote into lines

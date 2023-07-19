@@ -1,7 +1,7 @@
 const sharp = require("sharp");
 const apiURL = "https://zenquotes.io/api/random";
 const fetch = require("node-fetch");
-// Steps
+
 // Fetch a random quote
 
 // Turn the text of the quote into lines
@@ -69,7 +69,7 @@ async function getRandomQuote(apiURL) {
           font-family: Verdana;
         }
       </style>
-      <circle cx="382" cy="76" r="44" fill="rgba(255, 255, 0.155)"/>
+      <circle cx="382" cy="76" r="44" fill="rgba(255, 255, 255, 0.155)"/>
       <text x="382" y="76" dy="50" text-anchor="middle" font-size="90" font-family="Verdana" fill="white">"</text>
       <g>
         <rect x="0" y="0" width="${width}" height="auto"></rect>
@@ -78,9 +78,34 @@ async function getRandomQuote(apiURL) {
           <tspan class="quoteAuthorStyles" x="375" dy="1.8em">- ${quoteAuthor}</tspan>
         </text>
       </g>
-      <text x="${width / 2}" y="${height - 10}" class="footerStyles">Developed by Mark Foskett</text>
+      <text x="${width / 2}" y="${
+    height - 10
+  }" class="footerStyles">Developed by Mark Foskett</text>
     </svg>
   `;
+
+  // Add background images for the QuoteCard
+  const backgroundImages = [
+    "backgrounds/Love-and-Liberty.jpg",
+    "backgrounds/Purple-Paradise.jpg",
+    "backgrounds/Purplepine.jpg",
+    "backgrounds/Visions-of-Grandeur.jpg",
+  ];
+  // Get a random background image
+  const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+  const selectedBackgroundImage = backgroundImages[randomIndex];
+  // Composite the QuoteCard together
+  const timestamp = new Date().toLocaleString().replace(/[^\d]/g, "");
+  const svgBuffer = Buffer.from(svgImage);
+  const image = await sharp(selectedBackgroundImage)
+    .composite([
+      {
+        input: svgBuffer,
+        top: 0,
+        left: 0,
+      },
+    ])
+    .toFile(`finals/quote-card_${timestamp}.png`);
 }
 
 getRandomQuote(apiURL);

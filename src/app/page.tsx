@@ -4,13 +4,50 @@ import Image from 'next/image'
 // Assets
 import GreenBook from '../assets/green-book.png'
 import OrangeBook from '../assets/orange-book.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Footer from '@/components/Footer';
 import QuoteModal from '@/components/QuoteModal'
+import { quotesQueryName } from '@/graphql/queries'
+
+// AWS imports
+import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+import awsExports from '@/aws-exports';
+
+Amplify.configure({ ...awsExports, ssr: true });
+
+// Interface for DynamoDB object
+interface UpdateQuoteInfoData {
+  id: string;
+  queryName: string;
+  quotesGenerated: number;
+  createdAt: string;
+  updatedAt: string;
+}
+// Type guard for the fetch
 
 export default function Home() {
   // State Variables
   const [numberOfQuotes, setNumberOfQuotes] = useState<Number>(0);
+
+  // Function to fetch DynamoDB object (quotes generated)
+  const updateQuoteInfo = async () => {
+    try {
+      const response = await API.graphql<UpdateQuoteInfoData>({
+        query: quotesQueryName,
+        authMode: 'AWS_IAM',
+        variables: {
+          queryName: "LIVE",
+        },
+      })
+      console.log('response', response);
+    } catch (error) {
+      console.log('error getting quote data', error);
+    }
+  }
+
+  useEffect(() => {
+    updateQuoteInfo();
+  }, []);
 
   return (
     // Gradient Background

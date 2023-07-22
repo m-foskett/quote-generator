@@ -11,6 +11,7 @@ import { quotesQueryName } from '@/graphql/queries'
 
 // AWS imports
 import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+import { GraphQLResult } from '@aws-amplify/api-graphql'
 import awsExports from '@/aws-exports';
 
 Amplify.configure({ ...awsExports, ssr: true });
@@ -24,6 +25,13 @@ interface UpdateQuoteInfoData {
   updatedAt: string;
 }
 // Type guard for the fetch
+function isGraphQLResultForQuotesQueryName(response: any): response is GraphQLResult<{
+  quotesQueryName: {
+    items: [UpdateQuoteInfoData];
+  };
+}> {
+  return response.data && response.data.quotesQueryName && response.data.quotesQueryName.items;
+}
 
 export default function Home() {
   // State Variables
@@ -40,6 +48,17 @@ export default function Home() {
         },
       })
       console.log('response', response);
+      // Type Guards for response
+      if(!isGraphQLResultForQuotesQueryName(response)){
+        throw new Error('Unexpected respone from API.graphql');
+      }
+      if (!response.data) {
+        throw new Error('Response data is undefined');
+      }
+
+      const receivedNumberOfQuotes = response.data.quotesQueryName.items[0].quotesGenerated;
+      setNumberOfQuotes(receivedNumberOfQuotes);
+
     } catch (error) {
       console.log('error getting quote data', error);
     }

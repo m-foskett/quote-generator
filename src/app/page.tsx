@@ -50,7 +50,7 @@ export default function Home() {
       console.log('response', response);
       // Type Guards for response
       if(!isGraphQLResultForQuotesQueryName(response)){
-        throw new Error('Unexpected respone from API.graphql');
+        throw new Error('Unexpected response from API.graphql');
       }
       if (!response.data) {
         throw new Error('Response data is undefined');

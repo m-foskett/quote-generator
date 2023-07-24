@@ -1,8 +1,8 @@
 interface QuoteModalProps {
-
+    handleOpenGenerator: (e: React.SyntheticEvent) => Promise<void>
 }
 
-const QuoteModal = ({}: QuoteModalProps) => {
+const QuoteModal = ({handleOpenGenerator, }: QuoteModalProps) => {
   return (
     // Outer Container
     <div
@@ -25,6 +25,7 @@ const QuoteModal = ({}: QuoteModalProps) => {
                 className="h-24 w-72 border-2 border-solid border-lime-950 rounded-3xl mt-5 relative
                 duration-300 cursor-pointer top-5 m-auto origin-center bg-lime-700 bg-clip-padding backdrop-filter
                 backdrop-blur-sm bg-opacity-10 shadow-lime-300 shadow-lg hover:brightness-150 hover:ease-in-out hover:scale-110 hover:origin-center"
+                onClick={handleOpenGenerator}
             >
                 {/* Button Text */}
                 <div

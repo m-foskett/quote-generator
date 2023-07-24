@@ -13,6 +13,7 @@ import { quotesQueryName } from '@/graphql/queries'
 import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import awsExports from '@/aws-exports';
+import QuoteGenerator from '@/components/QuoteGenerator'
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -36,6 +37,9 @@ function isGraphQLResultForQuotesQueryName(response: any): response is GraphQLRe
 export default function Home() {
   // State Variables
   const [numberOfQuotes, setNumberOfQuotes] = useState<Number>(0);
+  const [openGenerator, setOpenGenerator] = useState<boolean>(false);
+  const [processingQuote, setProcessingQuote] = useState<boolean>(false);
+  const [quoteReceived, setQuoteReceived] = useState<String | null>(null);
 
   // Function to fetch DynamoDB object (quotes generated)
   const updateQuoteInfo = async () => {
@@ -68,11 +72,31 @@ export default function Home() {
     updateQuoteInfo();
   }, []);
 
+  // Quote Generator Close Handler
+  const handleCloseGenerator = () => {
+    setOpenGenerator(false);
+  }
+  // Quote Generator Open Handler
+  const handleOpenGenerator = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setOpenGenerator(true);
+    console.log("DEEZ");
+  }
+
   return (
     // Gradient Background
     <div className='w-screen h-screen bg-gradient-to-r from-lime-900 to-lime-300 animate-gradient-x'>
+      {/* Quote Generator Modal */}
+      <QuoteGenerator
+        open={openGenerator}
+        close={handleCloseGenerator}
+        processingQuote={processingQuote}
+        setProcessingQuote={setProcessingQuote}
+        quoteReceived={quoteReceived}
+        setQuoteReceived={setQuoteReceived}
+      />
       {/* Quote Modal */}
-      <QuoteModal />
+      <QuoteModal handleOpenGenerator={handleOpenGenerator}/>
       {/* Background Images */}
       <Image
         src={GreenBook}

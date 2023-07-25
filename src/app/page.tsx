@@ -78,9 +78,19 @@ export default function Home() {
   }
   // Quote Generator Open Handler
   const handleOpenGenerator = async (e: React.SyntheticEvent) => {
+    // Prevent default reload behaviour
     e.preventDefault();
+    // Toggle Open the Generator Modal
     setOpenGenerator(true);
-    console.log("DEEZ");
+    // Toggle the processing state
+    setProcessingQuote(true);
+    try {
+      // Run the Lambda Function
+      setProcessingQuote(false);
+    } catch (error) {
+      console.log('error generating the quote:', error);
+      setProcessingQuote(false);
+    }
   }
 
   return (

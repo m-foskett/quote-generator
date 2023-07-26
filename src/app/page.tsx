@@ -7,16 +7,25 @@ import OrangeBook from '../assets/orange-book.png'
 import { useEffect, useState } from 'react'
 import Footer from '@/components/Footer';
 import QuoteModal from '@/components/QuoteModal'
-import { quotesQueryName } from '@/graphql/queries'
+import { generateAQuote, quotesQueryName } from '@/graphql/queries'
 
 // AWS imports
 import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import awsExports from '@/aws-exports';
 import QuoteGenerator from '@/components/QuoteGenerator'
+import { GenerateAQuoteQuery } from '@/API'
 
 Amplify.configure({ ...awsExports, ssr: true });
 
+// Interface for AppSync & Lambda JSON response
+interface GenerateAQuoteData {
+  generateAQuote: {
+    statusCode: number,
+    headers: { [key: string]: string};
+    body: string;
+  }
+}
 // Interface for DynamoDB object
 interface UpdateQuoteInfoData {
   id: string;
@@ -75,6 +84,8 @@ export default function Home() {
   // Quote Generator Close Handler
   const handleCloseGenerator = () => {
     setOpenGenerator(false);
+    setProcessingQuote(false);
+    setQuoteReceived(null);
   }
   // Quote Generator Open Handler
   const handleOpenGenerator = async (e: React.SyntheticEvent) => {
@@ -86,6 +97,28 @@ export default function Home() {
     setProcessingQuote(true);
     try {
       // Run the Lambda Function
+      const runFunction = "runFunction";
+      const runFunctionStringified = JSON.stringify(runFunction);
+      const response = await API.graphql<GenerateAQuoteData>({
+        query: generateAQuote,
+        authMode: "AWS_IAM",
+        variables: {
+          input: runFunctionStringified,
+        },
+      });
+      const responseStringified = JSON.stringify(response);
+      const responseRestringified = JSON.stringify(responseStringified);
+      const bodyIndex = responseRestringified.indexOf('body=') + 5;
+      const bodyAndBase64 = responseRestringified.substring(bodyIndex);
+      const bodyArray = bodyAndBase64.split(",");
+      const body = bodyArray[0];
+      console.log(body);
+      setQuoteReceived(body);
+      // End processing state
+      setProcessingQuote(false);
+      // Fetch if any new quotes were generated from counter
+      updateQuoteInfo();
+
       setProcessingQuote(false);
     } catch (error) {
       console.log('error generating the quote:', error);

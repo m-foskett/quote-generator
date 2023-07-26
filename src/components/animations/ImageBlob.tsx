@@ -8,30 +8,28 @@ interface ImageBlobProps {
 
 const ImageBlob = ({
   quoteReceived,
-  // blobUrl,
+  blobUrl,
 }: ImageBlobProps) => {
-  // State Variables
-  const [blobUrl, setBlobUrl] = useState<string | null>(null);
   // Fetching response object from Lambda
-  useEffect(() => {
-    const response = {
-      "statusCode": 200,
-      "headers": {
-        "Content-Type": "image/png",
-        "Access-Control-Allow-Origin": "*"
-      },
-      "body": blob,
-      "isBase64Encoded": true
-    }
-    const binaryData = Buffer.from(response.body, 'base64');
-    const blob = new Blob([binaryData], {type: response.headers["Content-Type"]});
-    const newBlobUrl = URL.createObjectURL(blob);
-    setBlobUrl(newBlobUrl);
-    // Revoke old blob URL
-    return () => {
-      URL.revokeObjectURL(newBlobUrl);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const response = {
+  //     "statusCode": 200,
+  //     "headers": {
+  //       "Content-Type": "image/png",
+  //       "Access-Control-Allow-Origin": "*"
+  //     },
+  //     "body": blob,
+  //     "isBase64Encoded": true
+  //   }
+  //   const binaryData = Buffer.from(response.body, 'base64');
+  //   const blob = new Blob([binaryData], {type: response.headers["Content-Type"]});
+  //   const newBlobUrl = URL.createObjectURL(blob);
+  //   setBlobUrl(newBlobUrl);
+  //   // Revoke old blob URL
+  //   return () => {
+  //     URL.revokeObjectURL(newBlobUrl);
+  //   }
+  // }, []);
 
   if(!blobUrl) {
     return null;

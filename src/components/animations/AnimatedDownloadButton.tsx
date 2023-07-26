@@ -4,12 +4,17 @@ import Image from 'next/image'
 import Lottie from 'react-lottie-player'
 import lottieJson from '../../assets/data-center-animation.json'
 
-const AnimatedDownloadButton = () => {
+interface AnimatedDownloadButtonProps {
+  handleDownload: () => void;
+}
+
+const AnimatedDownloadButton = ({handleDownload}: AnimatedDownloadButtonProps) => {
   return (
     // Download Quote Card Container
     <div
       className='border-2 border-solid border-lime-950 relative rounded-3xl mt-5 scale-[0.7] m-auto
       hover:opacity-5 shadow-sm shadow-lime-300/30 backdrop-filter backdrop-blur-sm cursor-pointer w-[600px] h-[250px]'
+      onClick={handleDownload}
     >
       {/* Lottie Image */}
       <Lottie

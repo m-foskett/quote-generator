@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 // Material UI
 import { Backdrop, Box, CircularProgress, Fade, Modal } from '@mui/material';
 import ImageBlob from './animations/ImageBlob';
@@ -22,8 +22,36 @@ const QuoteGenerator = ({
     setQuoteReceived,
 }: QuoteGeneratorProps) => {
 
+    // State Variables
+    const [blobUrl, setBlobUrl] = useState<String | null>(null);
+    // Loading state quotes
     const wiseDevQuote = '"One does not simply center a div."';
     const wiseDevQuoteAuthor = '- Every developer ever.'
+    // Function: Download Quote Card Handler
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        if (typeof blobUrl === 'string') {
+            link.href = blobUrl;
+            link.download = 'quote.png';
+            link.click();
+        }
+    };
+    // Function: Receiving Quote Card Handler
+    useEffect(() => {
+        if(quoteReceived) {
+            const binaryData = Buffer.from(quoteReceived, 'base64');
+            const blob = new Blob([binaryData], {type: 'image/png'});
+            const blobUrlGenerated = URL.createObjectURL(blob);
+            console.log(blobUrlGenerated);
+            setBlobUrl(blobUrlGenerated);
+
+            // Revoke old blobUrl
+            return () => {
+                URL.revokeObjectURL(blobUrlGenerated);
+            }
+        }
+    }, [quoteReceived])
+
     return (
         <Modal
             id="QuoteGeneratorModal"
@@ -75,7 +103,7 @@ const QuoteGenerator = ({
                             </>
                         }
                         {/* State 2: Quote State Fulfilled */}
-                        {quoteReceived == null &&
+                        {quoteReceived !== null &&
                             <>
                                 {/* Quote Generator Title */}
                                 <div
@@ -98,10 +126,13 @@ const QuoteGenerator = ({
                                     hover:duration-300'
                                 >
                                     <ImageBlob
+                                        quoteReceived={quoteReceived}
+                                        blobUrl={blobUrl}
                                     />
                                 </div>
                                 {/* Animated Download Button */}
                                 <AnimatedDownloadButton
+                                    handleDownload={handleDownload}
                                 />
                             </>
                         }

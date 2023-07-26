@@ -3,10 +3,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 // AWS imports
-import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
-import awsExports from '@/aws-exports';
+// import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+// import awsExports from '@/aws-exports';
 
-Amplify.configure({ ...awsExports, ssr: true });
+// Amplify.configure({ ...awsExports, ssr: true });
 
 const inter = Inter({ subsets: ['latin'] })
 

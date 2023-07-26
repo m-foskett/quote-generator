@@ -23,7 +23,7 @@ const QuoteGenerator = ({
 }: QuoteGeneratorProps) => {
 
     // State Variables
-    const [blobUrl, setBlobUrl] = useState<String | null>(null);
+    const [blobUrl, setBlobUrl] = useState<string | null>(null);
     // Loading state quotes
     const wiseDevQuote = '"One does not simply center a div."';
     const wiseDevQuoteAuthor = '- Every developer ever.'

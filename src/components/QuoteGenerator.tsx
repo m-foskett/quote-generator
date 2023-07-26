@@ -75,7 +75,7 @@ const QuoteGenerator = ({
                             </>
                         }
                         {/* State 2: Quote State Fulfilled */}
-                        {quoteReceived !== null &&
+                        {quoteReceived == null &&
                             <>
                                 {/* Quote Generator Title */}
                                 <div

@@ -1,0 +1,11 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "QuoteAppTest:@model(appsync)": [
+        "read",
+        "update"
+      ]
+    }
+  }
+}

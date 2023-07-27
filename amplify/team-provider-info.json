@@ -23,6 +23,12 @@
       },
       "api": {
         "quotegenerator": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d29525ltw37mz3",
+          "type": "cicd"
+        }
       }
     }
   }

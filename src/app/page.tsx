@@ -14,7 +14,6 @@ import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql'
 import awsExports from '@/aws-exports';
 import QuoteGenerator from '@/components/QuoteGenerator'
-import { GenerateAQuoteQuery } from '@/API'
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -128,7 +127,7 @@ export default function Home() {
 
   return (
     // Gradient Background
-    <div className='w-screen h-screen bg-gradient-to-r from-lime-900 to-lime-300 animate-gradient-x'>
+    <div className='w-screen h-screen bg-gradient-to-r from-primary-900 to-primary-300 animate-gradient-x'>
       {/* Quote Generator Modal */}
       <QuoteGenerator
         open={openGenerator}

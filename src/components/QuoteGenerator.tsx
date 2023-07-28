@@ -70,9 +70,9 @@ const QuoteGenerator = ({
             >
                 {/* Quote Generator Modal Outer Container */}
                 <Box
-                    className="min-h-[350px] min-w-[350px] h-[70vh] w-[70vw] border-2 border-solid border-lime-950
+                    className="min-h-[350px] min-w-[350px] h-[70vh] w-[70vw] border-2 border-solid border-primary-950
                     rounded-xl top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] absolute z-[2]
-                    bg-lime-600 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 shadow-lime-300 shadow-lg"
+                    bg-primary-700 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 neon-primary"
                 >
                     {/* Quote Generator Modal Inner Container */}
                     <div className='top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] relative'>
@@ -80,20 +80,20 @@ const QuoteGenerator = ({
                         {(processingQuote === true && quoteReceived === null) &&
                             <>
                                 <CircularProgress
-                                    className='relative ml-[-55px] left-[50%] -translate-x-[50%] stroke-white'
+                                    className='relative ml-[-55px] left-[50%] -translate-x-[50%] stroke-primary-50'
                                     size={"8rem"}
                                     thickness={2.5}
                                     color='inherit'
                                 />
                                 {/* Quote Generator Title */}
                                 <div
-                                    className="text-xl text-center text-lime-50 px-0 py-5 relative sm:text-5xl"
+                                    className="text-xl text-center text-primary-50 px-0 py-5 relative sm:text-5xl"
                                 >
                                     Creating your quote...
                                 </div>
                                 {/* Quote Generator Subtitle */}
                                 <div
-                                    className="text-md text-center text-lime-50 px-0 py-5 w-[100%] relative sm:text-2xl italic"
+                                    className="text-md text-center text-primary-50 px-0 py-5 w-[100%] relative sm:text-2xl italic"
                                     style={{marginTop: "20px"}}
                                 >
                                     {wiseDevQuote}
@@ -107,13 +107,13 @@ const QuoteGenerator = ({
                             <>
                                 {/* Quote Generator Title */}
                                 <div
-                                    className="text-xl text-center text-lime-50 px-0 py-5 relative sm:text-5xl"
+                                    className="text-xl text-center text-primary-50 px-0 py-5 relative sm:text-5xl"
                                 >
                                     Download your quote!
                                 </div>
                                 {/* Quote Generator Subtitle */}
                                 <div
-                                    className="text-md text-center text-lime-50 px-0 py-5 w-[100%] relative sm:text-2xl italic"
+                                    className="text-md text-center text-primary-50 px-0 py-5 w-[100%] relative sm:text-2xl italic"
                                     style={{marginTop: "20px"}}
                                 >
                                     See a preview:
@@ -121,7 +121,7 @@ const QuoteGenerator = ({
                                 {/* Image Blob Container */}
                                 <div
                                     className='relative text-center top-3 mt-5 ease-in-out duration-300 w-fit m-auto h-24 z-[99999]
-                                    cursor-pointer origin-center bg-lime-700 bg-clip-padding shadow-lime-300 shadow-lg
+                                    cursor-pointer origin-center bg-primary-700 bg-clip-padding neon-primary
                                     hover:z-index[99999] hover:brightness-150 hover:ease-in-out hover:scale-[4.8] hover:origin-center
                                     hover:duration-300'
                                 >

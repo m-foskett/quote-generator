@@ -125,8 +125,8 @@ exports.handler = async (event) => {
         // Add background images for the QuoteCard
         const backgroundImages = [
           "backgrounds/Love-and-Liberty.jpg",
-          "backgrounds/Purple-Paradise.jpg",
-          "backgrounds/Purplepine.jpg",
+          "backgrounds/Dark-Knight.jpg",
+          "backgrounds/Purple-Bliss.jpg",
           "backgrounds/Visions-of-Grandeur.jpg",
         ];
         // Get a random background image

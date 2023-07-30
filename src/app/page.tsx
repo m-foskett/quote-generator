@@ -67,7 +67,7 @@ export default function Home() {
       if (!response.data) {
         throw new Error('Response data is undefined');
       }
-
+      // Get the total number of quotes generated ever
       const receivedNumberOfQuotes = response.data.quotesQueryName.items[0].quotesGenerated;
       setNumberOfQuotes(receivedNumberOfQuotes);
 

@@ -60,7 +60,7 @@ export default function Home() {
         },
       })
       console.log('response', response);
-      // Type Guards for response
+      // Type Guards for the response
       if(!isGraphQLResultForQuotesQueryName(response)){
         throw new Error('Unexpected response from API.graphql');
       }

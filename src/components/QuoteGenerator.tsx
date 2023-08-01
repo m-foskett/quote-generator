@@ -17,9 +17,7 @@ const QuoteGenerator = ({
     open,
     close,
     processingQuote,
-    setProcessingQuote,
     quoteReceived,
-    setQuoteReceived,
 }: QuoteGeneratorProps) => {
 
     // State Variables

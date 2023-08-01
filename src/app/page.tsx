@@ -1,19 +1,20 @@
 'use client'
 
-import Image from 'next/image'
-// Assets
-import GreenBook from '../assets/green-book.png'
-import OrangeBook from '../assets/orange-book.png'
+// Standard Imports
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
+// Assets Imports
+import MarcusAurelius from '../assets/marcus-aurelius.png'
+import Owl from '../assets/owl.png'
+// Custom Components Imports
 import Footer from '@/components/Footer';
 import QuoteModal from '@/components/QuoteModal'
-import { generateAQuote, quotesQueryName } from '@/graphql/queries'
-
-// AWS imports
-import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
-import { GraphQLResult } from '@aws-amplify/api-graphql'
-import awsExports from '@/aws-exports';
 import QuoteGenerator from '@/components/QuoteGenerator'
+// AWS imports
+import { Amplify, API, } from 'aws-amplify';
+import awsExports from '@/aws-exports';
+import { GraphQLResult } from '@aws-amplify/api-graphql'
+import { generateAQuote, quotesQueryName } from '@/graphql/queries'
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -33,7 +34,7 @@ interface UpdateQuoteInfoData {
   createdAt: string;
   updatedAt: string;
 }
-// Type guard for the fetch
+// Type guard for the GraphQL quote data fetch
 function isGraphQLResultForQuotesQueryName(response: any): response is GraphQLResult<{
   quotesQueryName: {
     items: [UpdateQuoteInfoData];
@@ -49,44 +50,41 @@ export default function Home() {
   const [processingQuote, setProcessingQuote] = useState<boolean>(false);
   const [quoteReceived, setQuoteReceived] = useState<String | null>(null);
 
-  // Function to fetch DynamoDB object (quotes generated)
+  // Function to fetch DynamoDB object (number of quotes generated)
   const updateQuoteInfo = async () => {
     try {
+      // Query the DynamoDB object for the quote data
       const response = await API.graphql<UpdateQuoteInfoData>({
         query: quotesQueryName,
         authMode: 'AWS_IAM',
         variables: {
           queryName: "LIVE",
         },
-      })
-      console.log('response', response);
-      // Type Guards for the response
+      });
+      // Type Guards for the GraphQL response
       if(!isGraphQLResultForQuotesQueryName(response)){
         throw new Error('Unexpected response from API.graphql');
       }
       if (!response.data) {
         throw new Error('Response data is undefined');
       }
-      // Get the total number of quotes generated ever
+      // Get the total number of quotes generated from the GraphQL query response
       const receivedNumberOfQuotes = response.data.quotesQueryName.items[0].quotesGenerated;
       setNumberOfQuotes(receivedNumberOfQuotes);
-
     } catch (error) {
       console.log('error getting quote data', error);
-    }
-  }
+    };
+  };
 
+  // useEffect to query the GraphQL object and update numberOfQuotes on render
   useEffect(() => {
     updateQuoteInfo();
   }, []);
 
-  // Quote Generator Close Handler
-  const handleCloseGenerator = () => {
-    setOpenGenerator(false);
-    setProcessingQuote(false);
-    setQuoteReceived(null);
-  }
   // Quote Generator Open Handler
+  // -  Handles processing states
+  // -  Runs Lambda Function
+  // -  Updates state variables with newly generated quote data
   const handleOpenGenerator = async (e: React.SyntheticEvent) => {
     // Prevent default reload behaviour
     e.preventDefault();
@@ -95,7 +93,7 @@ export default function Home() {
     // Toggle the processing state
     setProcessingQuote(true);
     try {
-      // Run the Lambda Function
+      // Run the Lambda Function to generate a new quote
       const runFunction = "runFunction";
       const runFunctionStringified = JSON.stringify(runFunction);
       const response = await API.graphql<GenerateAQuoteData>({
@@ -105,24 +103,33 @@ export default function Home() {
           input: runFunctionStringified,
         },
       });
+      // Get the generated result of the Lambda Function
       const responseStringified = JSON.stringify(response);
       const responseRestringified = JSON.stringify(responseStringified);
       const bodyIndex = responseRestringified.indexOf('body=') + 5;
       const bodyAndBase64 = responseRestringified.substring(bodyIndex);
       const bodyArray = bodyAndBase64.split(",");
       const body = bodyArray[0];
-      console.log(body);
+      // Set the newly received quote
       setQuoteReceived(body);
-      // End processing state
+      // End the processing state
       setProcessingQuote(false);
-      // Fetch if any new quotes were generated from counter
+      // Update the generated quotes counter
       updateQuoteInfo();
-
-      setProcessingQuote(false);
     } catch (error) {
       console.log('error generating the quote:', error);
+      // End the processing state
       setProcessingQuote(false);
     }
+  }
+
+  // Quote Generator Close Handler
+  // -  Toggles the processing and generator states
+  // -  Resets the quote state variable to null
+  const handleCloseGenerator = () => {
+    setOpenGenerator(false);
+    setProcessingQuote(false);
+    setQuoteReceived(null);
   }
 
   return (
@@ -141,15 +148,15 @@ export default function Home() {
       <QuoteModal handleOpenGenerator={handleOpenGenerator}/>
       {/* Background Images */}
       <Image
-        src={GreenBook}
-        alt="green book"
-        width={100}
-        height={100}
-        className='relative z-[1] ml-[90px] pt-[96px]'
+        src={Owl}
+        alt="owl"
+        width={150}
+        height={150}
+        className='relative z-[1] ml-[70px] pt-[96px]'
       />
       <Image
-        src={OrangeBook}
-        alt="orange book"
+        src={MarcusAurelius}
+        alt="marcus-aurelius"
         width={150}
         height={150}
         className='fixed z-[1] right-[98px] bottom-[67px]'

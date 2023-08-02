@@ -11,13 +11,19 @@ const QuoteModal = ({handleOpenGenerator, }: QuoteModalProps) => {
         bg-primary-700 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 neon-primary"
     >
         {/* Inner Container */}
-        <div className="top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] absolute w-[100%]">
+        <div
+            className="top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] absolute w-[100%]"
+        >
             {/* Title */}
-            <div className="text-xl text-center text-primary-50 px-0 py-5 relative sm:text-5xl">
+            <div
+                className="text-xl text-center text-primary-50 px-0 py-5 relative sm:text-5xl"
+            >
                 Inspirational Quote Generator
             </div>
             {/* Subtitle */}
-            <div className="text-md text-center text-primary-50 px-0 py-5 w-[100%] relative sm:text-2xl">
+            <div
+            className="text-md text-center text-primary-50 px-0 py-5 w-[100%] relative sm:text-2xl"
+            >
                 Need a fresh dose of inspiration? Generate an inspirational quote with just one click!
             </div>
             {/* Button */}
@@ -37,7 +43,7 @@ const QuoteModal = ({handleOpenGenerator, }: QuoteModalProps) => {
             </div>
         </div>
     </div>
-  )
-}
+  );
+};
 
 export default QuoteModal

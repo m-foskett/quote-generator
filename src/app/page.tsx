@@ -164,5 +164,5 @@ export default function Home() {
       {/* Footer */}
       <Footer numberOfQuotes={numberOfQuotes}/>
     </div>
-  )
+  );
 }

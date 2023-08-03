@@ -1,5 +1,5 @@
 # quote-generator
-This is an Inspirational Quote Generator application made using Next.JS 13, Typescript, Tailwind CSS and AWS Amplify (Lambda, GraphQL).
+This is an Inspirational Quote Generator application made using Next.JS 13, Typescript, Tailwind CSS and AWS Amplify (Lambda, GraphQL, DynamoDB).
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 ![Website](https://img.shields.io/website?url=https://prod.d29525ltw37mz3.amplifyapp.com/)
@@ -22,7 +22,7 @@ Below is a non-exhaustive list of the technologies utilised within this project.
 | ----------- | ----------- | ----------- |
 | Next.JS 13| AWS Lambda | React Lottie Image |
 | Tailwind CSS | GraphQL | |
-| MUI: Material UI| AWS Amplify | |
+| MUI: Material UI| DynamoDB | |
 
 ## :running: Run Deployed Version
 Deployed using Vercel at this domain: https://prod.d29525ltw37mz3.amplifyapp.com/

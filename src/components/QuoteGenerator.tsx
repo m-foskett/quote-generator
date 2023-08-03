@@ -1,6 +1,9 @@
+
+// Standard Imports
 import React, { useEffect, useState } from 'react'
 // Material UI
 import { Backdrop, Box, CircularProgress, Fade, Modal } from '@mui/material';
+// Custom Components Imports
 import ImageBlob from './animations/ImageBlob';
 import AnimatedDownloadButton from './animations/AnimatedDownloadButton';
 
@@ -17,34 +20,31 @@ const QuoteGenerator = ({
     open,
     close,
     processingQuote,
-    setProcessingQuote,
     quoteReceived,
-    setQuoteReceived,
 }: QuoteGeneratorProps) => {
-
     // State Variables
     const [blobUrl, setBlobUrl] = useState<string | null>(null);
-    // Loading state quotes
+    // Loading state quote info
     const wiseDevQuote = '"One does not simply center a div."';
     const wiseDevQuoteAuthor = '- Every developer ever.'
-    // Function: Download Quote Card Handler
+    // Custom Function: Download Quote Card Handler
     const handleDownload = () => {
         const link = document.createElement('a');
         if (typeof blobUrl === 'string') {
             link.href = blobUrl;
             link.download = 'quote.png';
             link.click();
-        }
+        };
     };
-    // Function: Receiving Quote Card Handler
+    // Custom Function: Receiving Quote Card Handler
     useEffect(() => {
         if(quoteReceived) {
+            // Convert the received blob base64 data into an image URL for download
             const binaryData = Buffer.from(quoteReceived, 'base64');
             const blob = new Blob([binaryData], {type: 'image/png'});
             const blobUrlGenerated = URL.createObjectURL(blob);
             console.log(blobUrlGenerated);
             setBlobUrl(blobUrlGenerated);
-
             // Revoke old blobUrl
             return () => {
                 URL.revokeObjectURL(blobUrlGenerated);
@@ -60,10 +60,6 @@ const QuoteGenerator = ({
             open={open}
             onClose={close}
             closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-                timeout: 500,
-            }}
         >
             <Fade
                 in={open}
@@ -75,7 +71,9 @@ const QuoteGenerator = ({
                     bg-primary-700 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 neon-primary"
                 >
                     {/* Quote Generator Modal Inner Container */}
-                    <div className='top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] relative'>
+                    <div
+                        className='top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] relative'
+                    >
                         {/* State 1: Processing Request of Quote + Quote State is empty */}
                         {(processingQuote === true && quoteReceived === null) &&
                             <>
@@ -104,7 +102,7 @@ const QuoteGenerator = ({
                         }
                         {/* State 2: Quote State Fulfilled */}
                         {quoteReceived !== null &&
-                            <>
+                            <div className='items-center'>
                                 {/* Quote Generator Title */}
                                 <div
                                     className="text-xl text-center text-primary-50 px-0 py-5 relative sm:text-5xl"
@@ -131,10 +129,10 @@ const QuoteGenerator = ({
                                     />
                                 </div>
                                 {/* Animated Download Button */}
-                                <AnimatedDownloadButton
-                                    handleDownload={handleDownload}
-                                />
-                            </>
+                                    <AnimatedDownloadButton
+                                        handleDownload={handleDownload}
+                                    />
+                            </div>
                         }
                     </div>
                 </Box>
